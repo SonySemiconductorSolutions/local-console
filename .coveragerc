@@ -1,0 +1,7 @@
+[run]
+relative_files = True
+include =
+    local-console/src/*
+omit =
+    local-console/src/local_console/assets/*
+branch = True

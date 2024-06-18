@@ -1,0 +1,125 @@
+#:import JsonLexer pygments.lexers.JsonLexer
+#:include res_path(components.kv)
+
+<StreamingScreenView>
+    md_bg_color: self.theme_cls.backgroundColor
+    on_enter: self.entry_actions()
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDBoxLayout:
+        # Top bar
+            orientation: "horizontal"
+            size_hint_y: 0.1
+            padding: "5dp"
+            spacing: "5dp"
+
+            MDBoxLayout:
+            # Controls half
+                orientation: "horizontal"
+                size_hint_x: 3
+                padding: "10dp"
+                spacing: "10dp"
+
+                GoHomeButton:
+
+                MDWidget:
+                    size_hint_x: 0.1
+
+                MDButton:
+                    id: btn_stream_control
+                    on_release: root.controller.toggle_stream_status()
+                    style: "elevated"
+                    pos_hint: {"center_y": 0.5}
+                    MDButtonText:
+                        text: ("Stop" if app.is_streaming else "Start") + " Streaming"
+
+                MDButton:
+                    id: btn_roi_control
+                    on_release: root.control_roi()
+                    style: "elevated"
+                    pos_hint: {"center_y": 0.5}
+                    MDButtonText:
+                        text: "Set ROI"
+
+                MDButton:
+                    id: btn_roi_reset
+                    on_release: root.reset_roi()
+                    style: "elevated"
+                    pos_hint: {"center_y": 0.5}
+                    MDButtonText:
+                        text: "Reset ROI"
+
+                MDWidget:
+
+            MDBoxLayout:
+            # Status readout half
+                orientation: "horizontal"
+                size_hint_x: 1.5
+                padding: "5dp"
+                spacing: "5dp"
+
+                MDIcon:
+                    icon: "video-outline"
+                    pos_hint: {'center_y': .5}
+
+                MDLabel:
+                    text: 'Streaming:'
+                MDLabel:
+                    id: stream_flag
+                    text: "Disabled"
+
+        MDBoxLayout:
+        # Image view half
+            orientation: "horizontal"
+            size_hint_y: 0.9
+            padding: "5dp"
+            spacing: "5dp"
+
+            ImageWithROI:
+                id: stream_image
+                radius: "10dp"
+                fit_mode: "contain"
+                on_roi: root.controller.set_roi(args[1])
+                on_size: self.update_roi()
+                on_texture: self.prime_for_roi(args[1])
+                on_state: root.refresh_roi_state(args[1])
+                size_hint_x: 0.7
+
+            MDBoxLayout:
+                size_hint_x: 0.3
+                orientation: "vertical"
+
+                MDBoxLayout:
+                    size_hint_y: 0.65
+
+                MDGridLayout:
+                    size_hint_y: 0.35
+                    cols: 3
+                    padding: "10sp"
+                    spacing: "2sp"
+
+                    MDLabel:
+                        text: 'ROI'
+                        font_style: "Title"
+                    MDLabel:
+                        text: 'Offset'
+                        font_style: "Body"
+                    MDLabel:
+                        text: 'Size'
+                        font_style: "Body"
+                    MDLabel:
+                        text: 'H:'
+                        font_style: "Body"
+                    MDLabel:
+                        id: lbl_roi_h_offset
+                    MDLabel:
+                        id: lbl_roi_h_size
+                    MDLabel:
+                        text: 'V:'
+                        font_style: "Body"
+                    MDLabel:
+                        id: lbl_roi_v_offset
+                    MDLabel:
+                        id: lbl_roi_v_size

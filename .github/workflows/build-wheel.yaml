@@ -1,0 +1,109 @@
+# Copyright 2024 Sony Semiconductor Solutions Corp.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+---
+name: Python Wheel build
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        required: true
+        type: string
+        description: Python version to target
+    outputs:
+      artifact:
+        description: Artifact identifier for built binaries
+        value: ${{ jobs.build.outputs.artifact }}
+      sha:
+        description: SHA of the checked out git reference
+        value: ${{ jobs.build.outputs.sha }}
+
+jobs:
+  build:
+    name: Build python wheel
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      artifact: ${{ steps.key.outputs.build-id }}
+      sha: ${{ steps.key.outputs.sha }}
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        path: "repo"
+        # Shallow checkouts were not conducive to setuptools-scm
+        # detecting the git repository with its objects.
+        fetch-depth: 0
+
+    - name: Hash of inputs to wheel build
+      id: key
+      # The hash is computed over:
+      # - the actual sources and assets of the local-console
+      # - the target python version
+      # - this GHA workflow spec file
+      # Such that no factor that can influence the wheel build
+      # is left to cause cache key inconsistencies.
+      run: |
+        hash=$(tar -cf - --sort=name --mode=777 --mtime='UTC 2019-01-01' \
+                         --group=0 --owner=0 --numeric-owner \
+                         --no-xattrs --no-acls \
+                         -C ${{ github.workspace }}/repo/ \
+                         local-console \
+                         .github/workflows/build-wheel.yaml \
+               | sha1sum -b | cut -d' ' -f1)
+        echo "sha=${hash}" >> "$GITHUB_OUTPUT"
+        echo "build-id=local-console-wheel-py${{ inputs.python-version }}-${hash}" >> "$GITHUB_OUTPUT"
+
+    - name: Cache wheel build
+      id: cache
+      uses: buildjet/cache@v4
+      env:
+        cache-name: cache-wheel
+      with:
+        key: ${{ steps.key.outputs.build-id }}
+        path: |
+            ${{ github.workspace }}/local_console-*-py3-*.whl
+
+    - name: Install system requirements
+      if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+      run: |
+        sudo apt -y update && \
+        sudo apt install -y gcc python3-dev make cmake \
+                            software-properties-common git
+
+    - name: Setup Python ${{ inputs.python-version }}
+      if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+      uses: actions/setup-python@v5
+      id: py
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Build wheel
+      if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+      run: |
+        [ $UID -ne 0 ] || (echo "Wheel build does not work well when done as root!"; exit 1)
+        ${{ steps.py.outputs.python-path }} -m venv ~/build_env
+        ~/build_env/bin/python -m pip install build
+        ~/build_env/bin/python -m build --wheel --outdir ${{ github.workspace }} ${{ github.workspace }}/repo/local-console/
+
+    - name: Upload wheel
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ steps.key.outputs.build-id }}
+        retention-days: 21
+        path: ${{ github.workspace }}/local_console-*-py3-*.whl

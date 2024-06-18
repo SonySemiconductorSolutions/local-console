@@ -1,0 +1,150 @@
+<GoHomeButton@MDButton>:
+    on_release: app.root.current = 'home screen'
+    style: "elevated"
+    pos_hint: {"center_y": 0.5}
+    size_hint_x: "60dp"
+    MDButtonIcon:
+        icon: "home"
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+
+<FileManager>:
+    canvas:
+        Color:
+            rgba: self.theme_cls.backgroundColor
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(5)
+
+        BoxLayout:
+        # Top Bar (Replaces MDTopAppBar)
+        # This is required due to the following issues:
+        # https://github.com/kivymd/KivyMD/issues/1678
+        # https://github.com/kivymd/KivyMD/issues/1660
+        # https://github.com/kivymd/KivyMD/blob/cfe5aac30f50708c6208c8b33b0ef1aa390721e8/kivymd/uix/appbar/appbar.py#L630
+            id: toolbar
+            md_bg_color:
+                app.theme_cls.surfaceColor \
+                if not root.background_color_toolbar else \
+                root.background_color_toolbar
+            size_hint_y: 0.1
+            spacing: dp(5)
+
+            MDIconButton:
+                on_release: root.back()
+                icon: "chevron-left"
+                pos_hint: {"center_y": .5}
+
+            MDLabel:
+                text: root.current_path
+                shorten: True
+                shorten_from: "left"
+                size_hint_x: 0.8
+                pos_hint: {"center_y": .5}
+                font_style: "Title"
+                role: "large"
+
+            MDIconButton:
+                on_release: root.exit_manager(1)
+                icon: "close-box"
+                pos_hint: {"center_y": .5}
+
+        RecycleView:
+            id: rv
+            key_viewclass: "viewclass"
+            key_size: "height"
+            bar_width: dp(4)
+            bar_color: root.theme_cls.primaryColor
+
+            RecycleGridLayout:
+                padding: "10dp"
+                spacing: "2dp"
+                cols: 3 if root.preview else 1
+                default_size: None, dp(48)
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height
+
+
+<PathSelectorCombo>:
+    orientation: "horizontal"
+    spacing: "15dp"
+
+    MDLabel:
+        text: root.name
+        adaptive_width: True
+
+    MDLabel:
+        text: root.path
+        shorten: True
+        shorten_from: 'left'
+        allow_selection: True
+        allow_copy: True
+        size_hint_x: 3
+        padding: "5sp"
+        canvas.before:
+            Color:
+                rgb: 0, 0, 0
+            Line:
+                rounded_rectangle: self.x, self.y, self.width, self.height, 8
+                width: 1
+
+    MDButton:
+        on_release: root.open_manager()
+        style: "elevated"
+        pos_hint: {"center_y": 0.5}
+        size_hint_x: "60dp"
+        MDButtonIcon:
+            icon: root.icon
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+
+<FileSizeCombo>:
+    orientation: "horizontal"
+    spacing: "15dp"
+
+    MDLabel:
+        text: root.label
+        adaptive_width: True
+
+    NumberInputField:
+        text: root._spec
+        on_text: root.set_spec(*args)
+        pos_hint: {"center_y": 0.5}
+        size_hint_x: None
+        width: "80sp"
+
+    MDDropDownItem:
+        pos_hint: {"center_y": .5}
+        on_release: root.open_menu(*args)
+
+        MDDropDownItemText:
+            text: root._selected_unit
+            font_style: "Body"
+            role: "large"
+
+<AppTypeCombo>:
+    orientation: "horizontal"
+    spacing: "15dp"
+
+    MDLabel:
+        text: root.label
+        adaptive_width: True
+
+    MDDropDownItem:
+        pos_hint: {"center_y": .5}
+        on_release: root.open_menu(*args)
+
+        MDDropDownItemText:
+            text: root._selected_unit
+            font_style: "Body"
+            role: "large"
+
+<CodeInputCustom>:
+    lexer: JsonLexer()
+    font_size: "12sp"
+    readonly: True

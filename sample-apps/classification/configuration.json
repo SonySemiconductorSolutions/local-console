@@ -1,0 +1,4 @@
+{
+  "max_predictions": 2,
+  "dnn_output_classes": 2
+}

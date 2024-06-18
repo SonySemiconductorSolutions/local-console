@@ -1,0 +1,106 @@
+#:import res_path local_console.gui.config.resource_path
+#:include res_path(components.kv)
+
+<ConfigurationScreenView>
+    md_bg_color: self.theme_cls.backgroundColor
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDBoxLayout:
+        # Top bar
+            orientation: "horizontal"
+            size_hint_y: 0.1
+
+            MDBoxLayout:
+            # Controls half
+                orientation: "horizontal"
+                padding: "15dp"
+
+                GoHomeButton:
+
+        MDBoxLayout:
+        # Configuration controls
+            orientation: "vertical"
+            padding: "15dp"
+            spacing: "15dp"
+            spacing_y: "5dp"
+
+            PathSelectorCombo:
+            # Image dir
+                id: image_dir_pick
+                name: 'Image dir:'
+                icon: "folder-cog"
+                path: app.image_dir_path
+                search: "dirs"
+                on_selected: root.select_path_image(args[1])
+
+            PathSelectorCombo:
+            # Inference dir
+                id: inference_dir_pick
+                name: 'Inference dir:'
+                icon: "folder-cog"
+                path: app.inference_dir_path
+                search: "dirs"
+                on_selected: root.select_path_inferences(args[1])
+
+            FileSizeCombo:
+                label: "Max total size from image and inference folders:"
+                on_value: root.controller.update_total_max_size(args[1])
+
+            MDLabel:
+                text: "[b]Application configuration[/b]"
+                markup: True
+
+            AppTypeCombo:
+                label: "Type:"
+                on_selected: root.controller.update_application_type(args[1])
+
+            PathSelectorCombo:
+                id: schema_pick
+                name: 'Schema:'
+                icon: "folder-cog"
+                selector: "file"
+                ext: [".fbs"]
+                on_selected: root.select_path_flatbuffers(args[1])
+
+            PathSelectorCombo:
+                id: app_configuration_pick
+                name: 'Configuration:'
+                icon: "folder-cog"
+                selector: "file"
+                ext: [".json"]
+                on_selected: root.select_path_app_configuration(args[1])
+
+            PathSelectorCombo:
+                id: labels_pick
+                name: 'Labels:'
+                icon: "folder-cog"
+                selector: "file"
+                ext: [".txt"]
+                on_selected: root.select_path_labels(args[1])
+                disabled: True
+
+            MDBoxLayout:
+
+            MDBoxLayout:
+                orientation: "horizontal"
+
+                MDBoxLayout:
+
+                MDExtendedFabButton:
+                    id: btn_process_schema
+                    on_release: root.controller.apply_configuration()
+                    pos_hint: {"center_y": 0.5}
+                    size_hint_x: 0.5
+
+                    MDExtendedFabButtonText:
+                        text: "Apply Configuration"
+                        adaptive_height: False
+
+                MDBoxLayout:
+
+        MDBoxLayout:
+        # Padding
+            orientation: "horizontal"
+            size_hint_y: 0.05

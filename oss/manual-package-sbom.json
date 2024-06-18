@@ -1,0 +1,33 @@
+{
+  "components": [
+    {
+      "bom-ref": "Inno Setup==6.2.2",
+      "description": "free installer for Windows programs by Jordan Russell and Martijn Laan.",
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://github.com/jrsoftware/issrc/blob/is-6_2_2/license.txt"
+        },
+        {
+          "type": "code",
+          "url": "https://github.com/jrsoftware/issrc"
+        },
+        {
+          "type": "source",
+          "url": "https://github.com/actions/runner-images/blob/22d681c1e298e687e01a9c770194250340514d8a/images/windows/Windows2022-Readme.md"
+        },
+        {
+          "type": "branch",
+          "url": "is-6_2_2"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Permission is granted to anyone to use this software for any purpose, including commercial application"
+          }
+        }
+      ]
+    }
+  ]
+}

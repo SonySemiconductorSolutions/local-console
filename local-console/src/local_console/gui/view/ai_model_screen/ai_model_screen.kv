@@ -1,0 +1,79 @@
+#:import res_path local_console.gui.config.resource_path
+#:include res_path(components.kv)
+
+<AIModelScreenView>
+    md_bg_color: self.theme_cls.backgroundColor
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDBoxLayout:
+        # Top bar
+            orientation: "horizontal"
+            size_hint_y: 0.1
+
+            MDBoxLayout:
+            # Controls half
+                orientation: "horizontal"
+                spacing: "10dp"
+                padding: "10dp"
+
+                GoHomeButton:
+
+                MDWidget:
+                    size_hint_x: 3
+
+        MDBoxLayout:
+        # Model setup controls
+            orientation: "horizontal"
+            size_hint_y: 0.1
+
+            MDBoxLayout:
+                orientation: "horizontal"
+                spacing: "10dp"
+                padding: "10dp"
+
+                PathSelectorCombo:
+                    id: model_pick
+                    name: 'Model location:'
+                    icon: "file-cog"
+                    selector: "file"
+                    on_selected: root.select_path(args[1])
+
+                MDButton:
+                    id: btn_ota_file
+                    on_release: root.controller.deploy()
+                    pos_hint: {"center_y": 0.5}
+                    disabled: True
+                    MDButtonText:
+                        text: "Deploy"
+
+        MDLabel:
+            text: "Neural Model Update Status"
+            halign: "center"
+            font_style: 'Title'
+            adaptive_height: True
+            padding_y: "10dp"
+
+        MDBoxLayout:
+        # Readout block
+            orientation: "horizontal"
+            size_hint_y: 0.8
+            spacing: "10dp"
+            padding: "20dp"
+
+            CodeInputCustom:
+                id: txt_ota_data
+                size_hint_x: 0.7
+
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint_x: 0.25
+
+                MDLabel:
+                    id: lbl_ota_status
+                    text: "N/A"
+                    font_style: 'Body'
+                    halign: 'center'
+
+                MDWidget:

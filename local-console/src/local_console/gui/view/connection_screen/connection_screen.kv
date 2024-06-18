@@ -1,0 +1,251 @@
+#:import res_path local_console.gui.config.resource_path
+#:import get_my_ip local_console.utils.local_network.get_my_ip_by_routing
+#:import utils kivy.utils
+#:include res_path(components.kv)
+
+<EntryLabel@MDLabel>:
+    halign: "right"
+
+<LocalIPInput>:
+    MDTooltipPlain:
+        text:
+            "If the given address resolves to this machine, the QR code \n" \
+            "will encode the machine's IP address in the local network."
+
+
+<ConnectionScreenView>
+    md_bg_color: self.theme_cls.backgroundColor
+    on_enter: self.entry_actions()
+
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: "10dp"
+        spacing: "10dp"
+
+        MDBoxLayout:
+        # Top bar
+            orientation: "horizontal"
+            size_hint_y: 1
+
+            MDBoxLayout:
+            # Controls half
+                orientation: "horizontal"
+                size_hint_x: 1
+                padding: "10dp"
+                spacing: "10dp"
+
+                GoHomeButton:
+
+                MDWidget:
+
+            MDBoxLayout:
+            # Status readout half
+                orientation: "horizontal"
+                size_hint_x: 1
+                padding: "5dp"
+                spacing: "5dp"
+
+                MDLabel:
+                    text: "Connection Status:"
+                    size_hint_x: 1
+                MDLabel:
+                    id: lbl_conn_status
+                    size_hint_x: 1
+
+        MDBoxLayout:
+        # Connection configurations
+            orientation: "horizontal"
+            size_hint_y: 9
+            spacing: "10dp"
+            MDGridLayout:
+                cols: 2
+                spacing: "10dp", "20dp"
+
+                EntryLabel:
+                    text: "Local IP Address:"
+                MDLabel:
+                    id: txt_local_ip
+                    allow_selection: True
+                    size_hint_y: None
+                    height: root.INPUTBOX_HEIGHT
+
+                EntryLabel:
+                    text: "MQTT host address:"
+                LocalIPInput:
+                    id: txt_mqtt_host
+                    on_text: root.validate_mqtt_host(*args)
+                    multiline: False
+                    size_hint_y: None
+                    max_height: root.INPUTBOX_HEIGHT
+                    height: root.INPUTBOX_HEIGHT
+                    MDTextFieldHelperText:
+                        text: "Enter a valid host address"
+                        mode: "on_focus"
+
+                EntryLabel:
+                    text: "MQTT port:"
+                FocusText:
+                    id: txt_mqtt_port
+                    on_text: root.validate_mqtt_port(*args)
+                    multiline: False
+                    size_hint_y: None
+                    max_height: root.INPUTBOX_HEIGHT
+                    height: root.INPUTBOX_HEIGHT
+                    focus_previous: txt_mqtt_host
+                    MDTextFieldHelperText:
+                        text: "Enter a valid port number"
+                        mode: "on_focus"
+
+                EntryLabel:
+                    text: "NTP server address:"
+                LocalIPInput:
+                    id: txt_ntp_host
+                    on_text: root.validate_ntp_host(*args)
+                    multiline: False
+                    size_hint_y: None
+                    max_height: root.INPUTBOX_HEIGHT
+                    height: root.INPUTBOX_HEIGHT
+                    focus_previous: txt_mqtt_port
+                    focus_next: txt_ip_address
+                    MDTextFieldHelperText:
+                        text: "Enter a valid ntp server address"
+                        mode: "on_focus"
+
+                EntryLabel:
+                    text: "IP Address:"
+                FocusText:
+                    id: txt_ip_address
+                    on_text: root.validate_ip_address(*args)
+                    multiline: False
+                    size_hint_y: None
+                    max_height: root.INPUTBOX_HEIGHT
+                    height: root.INPUTBOX_HEIGHT
+                    focus_previous: txt_ntp_host
+                    focus_next: txt_subnet_mask
+                    MDTextFieldHelperText:
+                        text: "Enter a valid IP address"
+                        mode: "on_focus"
+
+                EntryLabel:
+                    text: "Subnet Mask:"
+                FocusText:
+                    id: txt_subnet_mask
+                    on_text: root.validate_subnet_mask(*args)
+                    multiline: False
+                    size_hint_y: None
+                    max_height: root.INPUTBOX_HEIGHT
+                    height: root.INPUTBOX_HEIGHT
+                    focus_previous: txt_ip_address
+                    focus_next: txt_gateway
+                    MDTextFieldHelperText:
+                        text: "Enter a valid Subnet Mask"
+                        mode: "on_focus"
+
+                EntryLabel:
+                    text: "Gateway:"
+                FocusText:
+                    id: txt_gateway
+                    on_text: root.validate_gateway(*args)
+                    multiline: False
+                    size_hint_y: None
+                    max_height: root.INPUTBOX_HEIGHT
+                    height: root.INPUTBOX_HEIGHT
+                    focus_previous: txt_subnet_mask
+                    focus_next: txt_dns_server
+                    MDTextFieldHelperText:
+                        text: "Enter a valid Gateway"
+                        mode: "on_focus"
+
+                EntryLabel:
+                    text: "DNS server:"
+                FocusText:
+                    id: txt_dns_server
+                    on_text: root.validate_dns_server(*args)
+                    multiline: False
+                    size_hint_y: None
+                    max_height: root.INPUTBOX_HEIGHT
+                    height: root.INPUTBOX_HEIGHT
+                    focus_previous: txt_gateway
+                    focus_next: txt_wifi_ssid
+                    MDTextFieldHelperText:
+                        text: "Enter a valid DNS server"
+                        mode: "on_focus"
+
+                EntryLabel:
+                    text: "Wi-Fi SSID"
+                FocusText:
+                    id: txt_wifi_ssid
+                    on_text: root.validate_wifi_ssid(*args)
+                    multiline: False
+                    size_hint_y: None
+                    max_height: root.INPUTBOX_HEIGHT
+                    height: root.INPUTBOX_HEIGHT
+                    focus_previous: txt_dns_server
+                    focus_next: txt_wifi_password
+                    MDTextFieldHelperText:
+                        text: "Enter a valid Wi-Fi SSID"
+                        mode: "on_focus"
+
+                EntryLabel:
+                    text: "Wi-Fi Password"
+                MDGridLayout:
+                    size_hint_y: None
+                    max_height: root.INPUTBOX_HEIGHT
+                    height: root.INPUTBOX_HEIGHT
+                    cols: 2
+                    FocusText:
+                        id: txt_wifi_password
+                        on_text: root.validate_wifi_password(*args)
+                        multiline: False
+                        max_height: root.INPUTBOX_HEIGHT
+                        height: root.INPUTBOX_HEIGHT
+                        focus_previous: txt_wifi_ssid
+                        focus_next: txt_mqtt_host
+                        password: True
+                        MDTextFieldHelperText:
+                            text: "Enter a valid Wi-Fi password"
+                            mode: "on_focus"
+                    MDIconButton:
+                        id: btn_icon_eye
+                        icon: "eye-off"
+                        width: "27dp"
+                        style: "tonal"
+                        max_height: root.INPUTBOX_HEIGHT
+                        height: root.INPUTBOX_HEIGHT
+                        on_release: root.controller.toggle_password_visibile()
+                        radius: 5, 5, 5, 5
+                        canvas.before:
+                            Color:
+                                rgba: utils.get_color_from_hex("#7A848D")
+                            Line:
+                                width: 1.1
+                                rounded_rectangle: self.x, self.y, self.width, self.height, 5, 5, 5, 5
+
+                # Spacer
+                MDWidget:
+
+            MDBoxLayout:
+            # QR code section
+                orientation: "vertical"
+                size_hint_x: 1
+                padding: "5dp"
+                spacing: "10dp"
+
+                MDExtendedFabButton:
+                    id: btn_qr_gen
+                    fab_state: "expand"
+                    valign: "center"
+                    on_release: root.controller.qr_generate()
+                    MDExtendedFabButtonText:
+                        text: "Generate"
+                    MDExtendedFabButtonIcon:
+                        icon: "qrcode-plus"
+
+                Image:
+                    id: img_qr_display
+                    color: root.theme_cls.backgroundColor
+                    fit_mode: "contain"
+
+                # Spacer
+                MDWidget:
+                    size_hint_y: .1

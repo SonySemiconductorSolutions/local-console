@@ -1,0 +1,119 @@
+#:import JsonLexer pygments.lexers.JsonLexer
+#:include res_path(components.kv)
+
+<InferenceScreenView>
+    md_bg_color: self.theme_cls.backgroundColor
+    inference_data: self.inference_data
+
+    on_enter: self.entry_actions()
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDBoxLayout:
+        # Top bar
+            orientation: "horizontal"
+            size_hint_y: 0.1
+            padding: "5dp"
+            spacing: "5dp"
+
+            MDBoxLayout:
+            # Controls half
+                orientation: "horizontal"
+                size_hint_x: 3
+                padding: "10dp"
+                spacing: "10dp"
+
+                GoHomeButton:
+
+                MDButton:
+                    id: btn_stream_control
+                    on_release: root.toggle_stream_status()
+                    style: "elevated"
+                    pos_hint: {"center_y": 0.5}
+                    MDButtonText:
+                        text: ("Stop" if app.is_streaming else "Start") + " Streaming"
+
+                MDWidget:
+
+            MDBoxLayout:
+            # Status readout half
+                orientation: "horizontal"
+                size_hint_x: 1.5
+                padding: "5dp"
+                spacing: "5dp"
+
+                MDIcon:
+                    icon: "video-outline"
+                    pos_hint: {'center_y': .5}
+
+                MDLabel:
+                    text: 'Streaming:'
+
+                MDLabel:
+                    id: stream_flag
+                    text: "Disabled"
+
+        GridLayout:
+        # File path
+            md_bg_color: root.theme_cls.backgroundColor
+            rows: 2
+            cols: 2
+            padding: "5dp"
+            spacing: "5dp"
+            size_hint_y: 0.1
+
+            MDLabel:
+                text: 'Image:'
+                adaptive_width: True
+
+            MDLabel:
+                text: app.image_dir_path
+                allow_selection: True
+                allow_copy: True
+                padding: "5sp"
+                shorten: True
+                shorten_from: "left"
+                canvas.before:
+                    Color:
+                        rgb: 0, 0, 0
+                    Line:
+                        rounded_rectangle: self.x, self.y, self.width, self.height, 8
+                        width: 1
+            MDLabel:
+                text: 'Inference:'
+                adaptive_width: True
+
+            MDLabel:
+                text: app.inference_dir_path
+                allow_selection: True
+                allow_copy: True
+                padding: "5sp"
+                shorten: True
+                shorten_from: "left"
+                canvas.before:
+                    Color:
+                        rgb: 0, 0, 0
+                    Line:
+                        rounded_rectangle: self.x, self.y, self.width, self.height, 8
+                        width: 1
+
+        MDBoxLayout:
+        # Image view half
+            orientation: "horizontal"
+            size_hint_y: 0.7
+            padding: "5dp"
+            spacing: "5dp"
+
+            ImageWithROI:
+                id: stream_image
+                radius: "10dp"
+                fit_mode: "contain"
+                size_hint_x: 0.7
+
+            MDBoxLayout:
+                size_hint_x: 0.3
+                orientation: "vertical"
+
+                CodeInputCustom:
+                    id: inference_field

@@ -1,0 +1,74 @@
+# Copyright 2024 Sony Semiconductor Solutions Corp.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+---
+exclude: .vscode/.*.json
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: check-docstring-first
+      - id: check-json
+      - id: pretty-format-json
+        args: [--autofix, --no-sort-keys]
+      - id: check-added-large-files
+      - id: debug-statements
+  - repo: https://github.com/hadialqattan/pycln
+    rev: v2.2.2
+    hooks:
+      - id: pycln
+        args: [--all]
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+      - id: python-use-type-annotations
+  - repo: https://github.com/asottile/reorder_python_imports
+    rev: v3.10.0
+    hooks:
+      - id: reorder-python-imports
+        args: [--py39-plus]
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.10.1
+    hooks:
+      - id: pyupgrade
+        args: [--py39-plus]
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        args: [--python-version=3.10]
+        additional_dependencies:
+          - types-paho-mqtt==1.6.0.7
+          - types-retry
+          - typer
+          - pydantic
+          - typing
+          - hypothesis
+          - pytest
+          - trio-typing
+          - types-Pygments
+          - types-qrcode
+          - types-psutil
+        exclude: tests
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 23.7.0
+    hooks:
+      - id: black
+  - repo: https://github.com/PyCQA/flake8
+    rev: 6.1.0
+    hooks:
+      - id: flake8

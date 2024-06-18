@@ -1,0 +1,117 @@
+#:import res_path local_console.gui.config.resource_path
+#:include res_path(components.kv)
+
+<StatusLabel>:
+    text: "Current stage:"
+    font_style: 'Body'
+
+    MDTooltipPlain:
+        text:
+            "This indicator might not reflect the correct status upon camera reset. \n" \
+            "This indicator is only updated during a deployment operation."
+
+
+<StatusTitle@MDBoxLayout>:
+    orientation: "horizontal"
+    size_hint_y: 0.1
+
+    StatusLabel:
+        adaptive_width: True
+
+    MDAnchorLayout:
+        size_hint_x: None
+        width: "16sp"
+        anchor_y: "top"
+        anchor_x: "left"
+
+        MDIcon:
+            icon: "help-box"
+            theme_font_size: "Custom"
+            font_size: "16sp"
+
+
+<ApplicationsScreenView>
+    md_bg_color: self.theme_cls.backgroundColor
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDBoxLayout:
+        # Top bar
+            orientation: "horizontal"
+            size_hint_y: 0.1
+
+            MDBoxLayout:
+            # Controls half
+                orientation: "horizontal"
+                spacing: "10dp"
+                padding: "10dp"
+
+                GoHomeButton:
+
+                MDWidget:
+                    size_hint_x: 3
+
+        MDBoxLayout:
+        # Top bar
+            orientation: "horizontal"
+            size_hint_y: 0.1
+
+            MDBoxLayout:
+                orientation: "horizontal"
+                spacing: "10dp"
+                padding: "10dp"
+
+                PathSelectorCombo:
+                    id: app_file
+                    name: 'App location:'
+                    icon: "file-cog"
+                    selector: "file"
+                    on_selected: root.select_path(args[1])
+
+                MDButton:
+                    id: btn_deploy_file
+                    on_release: root.controller.deploy(app_file.path)
+                    pos_hint: {"center_y": 0.5}
+                    disabled: True
+                    MDButtonText:
+                        text: "Deploy"
+
+        MDBoxLayout:
+        # Title
+            orientation: "horizontal"
+            size_hint_y: 0.1
+
+            MDWidget:
+
+            MDLabel:
+                text: "Deployment Status"
+                font_style: 'Title'
+                adaptive_height: True
+
+            MDWidget:
+
+        MDBoxLayout:
+        # Readout block
+            orientation: "horizontal"
+            size_hint_y: 0.8
+            spacing: "10dp"
+            padding: "20dp"
+
+            CodeInputCustom:
+                id: txt_deployment_data
+                size_hint_x: 0.7
+
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint_x: 0.25
+
+                StatusTitle:
+
+                MDGridLayout:
+                    id: layout_status
+                    rows: 1
+                    size_hint_y: 0.2
+
+                MDWidget:
+                    size_hint_y: 0.7

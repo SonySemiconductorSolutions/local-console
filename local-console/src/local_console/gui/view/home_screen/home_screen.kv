@@ -1,0 +1,92 @@
+#:import res_path local_console.gui.config.resource_path
+
+<HomeScreenView>
+    md_bg_color: self.theme_cls.backgroundColor
+
+    MDBoxLayout:
+        orientation: "horizontal"
+        adaptive_height: False
+        padding: "20dp"
+        spacing: "10dp"
+
+        MDBoxLayout:
+            orientation: "vertical"
+            spacing: "10dp"
+            size_hint_x: 1
+            adaptive_height: False
+
+            MDExtendedFabButton:
+                size_hint_x: .7
+                fab_state: "expand"
+                valign: "center"
+                on_press: root.manager.current = 'connection screen'
+                MDExtendedFabButtonIcon:
+                    icon: "access-point-network"
+                MDExtendedFabButtonText:
+                    text: "Connection"
+
+            MDExtendedFabButton:
+                size_hint_x: .7
+                fab_state: "expand"
+                valign: "center"
+                on_press: root.manager.current = 'configuration screen'
+                MDExtendedFabButtonIcon:
+                    icon: "folder-cog-outline"
+                MDExtendedFabButtonText:
+                    text: "Configuration"
+
+            MDExtendedFabButton:
+                size_hint_x: .7
+                fab_state: "expand"
+                valign: "center"
+                on_press: root.manager.current = 'streaming screen'
+                MDExtendedFabButtonIcon:
+                    icon: "animation-play"
+                MDExtendedFabButtonText:
+                    text: "Streaming"
+
+            MDExtendedFabButton:
+                size_hint_x: .7
+                fab_state: "expand"
+                valign: "center"
+                on_press: root.manager.current = 'inference screen'
+                MDExtendedFabButtonIcon:
+                    icon: "lightbulb-on-outline"
+                MDExtendedFabButtonText:
+                    text: "Inference"
+
+            MDExtendedFabButton:
+                size_hint_x: .7
+                fab_state: "expand"
+                valign: "center"
+                on_press: root.manager.current = 'applications screen'
+                MDExtendedFabButtonIcon:
+                    icon: "application-cog"
+                MDExtendedFabButtonText:
+                    text: "Applications"
+
+            MDExtendedFabButton:
+                size_hint_x: .7
+                fab_state: "expand"
+                valign: "center"
+                on_press: root.manager.current = 'ai model screen'
+                MDExtendedFabButtonIcon:
+                    icon: "dice-multiple"
+                MDExtendedFabButtonText:
+                    text: "AI Model"
+
+            MDWidget:
+
+        MDBoxLayout:
+            orientation: "vertical"
+            adaptive_height: False
+            size_hint_x: 2
+
+            MDBoxLayout:
+                size_hint_y: 0.9
+
+            MDLabel:
+                text: root.version_number
+                size_hint_y: 0.1
+                padding: "30dp"
+                halign: "right"

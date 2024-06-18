@@ -1,0 +1,113 @@
+{
+  "components": [
+    {
+      "bom-ref": "idna==3.7",
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://github.com/kjd/idna/blob/v3.7/LICENSE.md"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD 3-Clause New or Revised License"
+          }
+        }
+      ]
+    },
+    {
+      "bom-ref": "importlib_metadata==7.1.0",
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://github.com/python/importlib_metadata/blob/v7.1.0/LICENSE"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0 license"
+          }
+        }
+      ]
+    },
+    {
+      "bom-ref": "materialyoucolor==2.0.9",
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://github.com/T-Dynamos/materialyoucolor-python/blob/v2.0.9/LICENSE"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT license"
+          }
+        }
+      ]
+    },
+    {
+      "bom-ref": "packaging==24.0",
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://github.com/pypa/packaging/blob/24.0/LICENSE"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache 2 or BSD"
+          }
+        }
+      ]
+    },
+    {
+      "bom-ref": "Kivy-Garden==0.1.5",
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://pypi.org/project/Kivy-Garden/0.1.5/"
+        }
+      ]
+    },
+    {
+      "bom-ref": "annotated-types==0.6.0",
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://github.com/annotated-types/annotated-types/blob/v0.6.0/LICENSE"
+        }
+      ]
+    },
+    {
+      "bom-ref": "attrs==23.2.0",
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://github.com/python-attrs/attrs/blob/23.2.0/LICENSE"
+        }
+      ]
+    },
+    {
+      "bom-ref": "exceptiongroup==1.2.1",
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://github.com/agronholm/exceptiongroup/blob/1.2.1/LICENSE"
+        }
+      ]
+    },
+    {
+      "bom-ref": "urllib3==2.2.1",
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://github.com/urllib3/urllib3/blob/2.2.1/LICENSE.txt"
+        }
+      ]
+    }
+  ]
+}

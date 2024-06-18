@@ -1,0 +1,109 @@
+{
+  "components": [
+    {
+      "bom-ref": "mosquitto==2.0.9",
+      "description": "An open source MQTT broker",
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://github.com/eclipse/mosquitto/blob/v2.0.9/LICENSE.txt"
+        },
+        {
+          "type": "code",
+          "url": "https://github.com/eclipse/mosquitto"
+        },
+        {
+          "type": "branch",
+          "url": "v2.0.9"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Eclipse Public License 2.0"
+          }
+        },
+        {
+          "license": {
+            "id": "Eclipse Distribution License 1.0"
+          }
+        }
+      ]
+    },
+    {
+      "bom-ref": "cpython==3.11.8",
+      "description": "The Python programming language",
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://github.com/python/cpython/blob/v3.11.8/LICENSE"
+        },
+        {
+          "type": "code",
+          "url": "https://github.com/python/cpython"
+        },
+        {
+          "type": "branch",
+          "url": "v3.11.8"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Python Software Foundation License Version 2"
+          }
+        }
+      ]
+    },
+    {
+      "bom-ref": "flatbuffers==24.3.25",
+      "description": "FlatBuffers: Memory Efficient Serialization Library",
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://github.com/google/flatbuffers/blob/v24.3.25/LICENSE"
+        },
+        {
+          "type": "code",
+          "url": "https://github.com/google/flatbuffers"
+        },
+        {
+          "type": "branch",
+          "url": "v24.3.25"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache License, version 2.0"
+          }
+        }
+      ]
+    },
+    {
+      "bom-ref": "git==2.44.0.windows.1",
+      "description": "A fork of Git containing Windows-specific patches.",
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://github.com/git-for-windows/git/blob/v2.44.0.windows.1/COPYING"
+        },
+        {
+          "type": "code",
+          "url": "https://github.com/git-for-windows/git"
+        },
+        {
+          "type": "branch",
+          "url": "v2.44.0.windows.1"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "GNU GENERAL PUBLIC LICENSE"
+          }
+        }
+      ]
+    }
+  ]
+}

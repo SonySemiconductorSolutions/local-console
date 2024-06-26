@@ -38,14 +38,20 @@ jobs:
   e2e-tests:
     name: E2E Tests
     runs-on: [self-hosted, X64]
+    needs: [wheel]
     steps:
     - name: Run external System Tests
       uses: convictional/trigger-workflow-and-wait@v1.6.5
       with:
         owner: midokura
         repo: wedge-cli
-        github_token: ${{ secrets.TEMPORARY_PAT_TOKEN }}
-        github_user: ${{ secrets.TEMPORARY_PAT_USER }}
+        github_token: ${{ secrets.EXTENSIONS_CI_TOKEN }}
+        github_user: ${{ secrets.EXTENSIONS_CI_USER }}
         workflow_file_name: execute-e2e.yaml
         ref: main
-        client_payload: '{"lc-commit":"${{ github.event.pull_request.head.sha }}"}'
+        client_payload: |
+          {
+            "lc-artifact-name": "${{ needs.wheel.outputs.artifact }}",
+            "lc-artifact-repo": "SonySemiconductorSolutions/local-console",
+            "lc-artifact-run-id": "${{ github.run_id }}"
+          }

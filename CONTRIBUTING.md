@@ -20,8 +20,7 @@ If you find yourself wishing for a feature that doesn't exist, you are probably 
 
 ## Security Vulnerabilities
 
-> **Warning**
->
+> [!WARNING]
 > Do not use public issues to report security vulnerabilities: contact us directly instead.
 
 If you think that you have identified a security vulnerability in local-console, please send us your report with as much context as possible via [our contact form](https://developer.sony.com/contact-us/).
@@ -49,10 +48,9 @@ In order to maintain proper traceability of contributions, we require that you a
 
 Our team members will review your PR, and once it is approved and passes continuous integration checks it will be ready to merge.
 
-Bear in mind that when you contribute a new feature, the maintenance burden is transferred to the wedge-platform team. This means that the benefit of the contribution must be compared against the cost of maintaining the feature.
+Bear in mind that when you contribute a new feature, the maintenance burden is transferred to the local-console team. This means that the benefit of the contribution must be compared against the cost of maintaining the feature.
 
-> **Warning**
->
+> [!WARNING]
 > By submitting a PR, you agree to license your work under the same license as that used by the project.
 
 ## License and Copyright

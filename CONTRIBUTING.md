@@ -23,7 +23,7 @@ If you find yourself wishing for a feature that doesn't exist, you are probably 
 > [!WARNING]
 > Do not use public issues to report security vulnerabilities: contact us directly instead.
 
-If you think that you have identified a security vulnerability in local-console, please send us your report with as much context as possible via [our contact form](https://developer.sony.com/contact-us/).
+If you think that you have identified a security vulnerability in local-console, please send us your report with as much context as possible via [our contact form](https://support.aitrios.sony-semicon.com/hc/en-us/requests/new).
 
 ## Contributing Code, Tests, and Documentation
 

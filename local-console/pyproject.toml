@@ -5,19 +5,19 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "local-console"
 description = "Local Console for offline camera operation"
-license = {file = "LICENSE"}
+license = { file = "LICENSE" }
 dynamic = ["version"]
 authors = [
-	{name = "DevTools and SDKs team", email = "engineering@midokura.com"}
+	{ name = "DevTools and SDKs team", email = "engineering@midokura.com" },
 ]
 classifiers = [
-    "License :: OSI Approved :: Apache Software License",
+	"License :: OSI Approved :: Apache Software License",
 	"Natural Language :: English",
 	"Framework :: Trio",
-    "Operating System :: OS Independent",
+	"Operating System :: OS Independent",
 	"Topic :: Scientific/Engineering :: Artificial Intelligence",
 	"Topic :: Scientific/Engineering :: Image Recognition",
-  	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.11",
 ]
 requires-python = ">=3.11"
 dependencies = [
@@ -58,8 +58,8 @@ dependencies = [
 	"py==1.11.0",
 	"pycparser==2.22",
 	"pycryptodome==3.21.0",
-	"pydantic==2.8.2",
-	"pydantic_core==2.20.1",
+	"pydantic==2.10.6",
+	"pydantic_core==2.27.2",
 	"Pygments==2.18.0",
 	"pypng==0.20220715.0",
 	"python-multipart==0.0.9",
@@ -80,6 +80,7 @@ dependencies = [
 	"types-Pygments==2.18.0.20240506",
 	"types-retry==0.9.9.4",
 	"types-setuptools==69.5.0.20240522",
+	"typing-inspection==0.4.0",
 	"typing_extensions==4.12.2",
 	"urllib3==2.0.7",
 	"watchdog==4.0.2",
@@ -92,7 +93,7 @@ dependencies = [
 homepage = "https://github.com/midokura/local-console"
 
 [tool.setuptools.dynamic]
-version = {file = ["VERSION"]}
+version = { file = ["VERSION"] }
 
 [tool.setuptools]
 license-files = ["*LICENSE"]
